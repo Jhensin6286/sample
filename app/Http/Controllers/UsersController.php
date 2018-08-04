@@ -15,9 +15,7 @@ class UsersController extends Controller
         ]);
 
 
-        $this->middleware('guset',[
-            'only' => ['create']
-        ]);
+
     }
     public function create(){
         return view('users.create');
