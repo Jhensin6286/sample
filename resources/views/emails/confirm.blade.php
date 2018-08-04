@@ -1,4 +1,4 @@
-confirm.blade.php
+s
 
 <html>
 <head>

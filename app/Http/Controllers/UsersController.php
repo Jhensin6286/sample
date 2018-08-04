@@ -42,7 +42,7 @@ class UsersController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        $this->sendEmailConfirmationTo($user)
+        $this->sendEmailConfirmationTo($user);
         session()->flash('success', '验证邮件已发送到你的注册邮箱上，请注意查收。');
         return redirect('/');
     }
@@ -97,10 +97,10 @@ class UsersController extends Controller
     protected function sendEmailConfirmationTo($user){
         $view = 'emails.confirm';
         $data = compact('user');
-        $form = 'aufree@yousails.com';
-        $name = 'Aufree';
+
+
         $to = $user->email;
-        $subject = "感谢注册 Sample 应用！请确认你的邮箱。"；
+        $subject = "感谢注册 Sample 应用！请确认你的邮箱。";
 
         Mail::send($view,$data,function ($message) use  ($from, $name, $to, $subject) {
             $message->from($from, $name)->to($to)->subject($subject);
