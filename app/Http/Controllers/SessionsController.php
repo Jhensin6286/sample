@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * 登陆的相关函数
+ */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -19,16 +21,19 @@ class SessionsController extends Controller
 
     public function store(Request $request)
     {
+        // 接受邮箱地址和密码
        $credentials = $this->validate($request, [
            'email' => 'required|email|max:255',
            'password' => 'required'
        ]);
-
+        // 验证
        if (Auth::attempt($credentials, $request->has('remember'))) {
+           // 假如已激活
            if(Auth::user()->activated) {
                session()->flash('success', '欢迎回来！');
                return redirect()->intended(route('users.show', [Auth::user()]));
            } else {
+               // 假如未激活
                Auth::logout();
                session()->flash('warning', '你的账号未激活，请检查邮箱中的注册邮件进行激活。');
                return redirect('/');

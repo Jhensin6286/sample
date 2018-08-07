@@ -14,6 +14,7 @@ class AddActivationToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
+            // 允许为空
             $table->string('activation_token')->nullable();
             $table->boolean('activated')->default(false);
         });

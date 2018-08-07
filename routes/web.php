@@ -39,9 +39,9 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 
 Route::resource('statuses', 'StatusesController', ['only' => ['store', 'destroy']]);
 
-// 显示关注的人
+// 显示关注的人页面
 Route::get('/users/{user}/followings', 'UsersController@followings')->name('users.followings');
-// 显示粉丝
+// 显示粉丝页面
 Route::get('/users/{user}/followers', 'UsersController@followers')->name('users.followers');
 
 // 关注用户
