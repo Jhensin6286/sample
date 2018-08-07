@@ -14,13 +14,18 @@ class UsersController extends Controller
         $this->middleware('auth', [
             'except' => ['show' , 'create' , 'store','index']
         ]);
-
-
-
     }
+
+
+
     public function create(){
         return view('users.create');
     }
+
+
+
+
+
 
     public function show(User $user){
         $statuses = $user->statuses()
@@ -28,6 +33,8 @@ class UsersController extends Controller
         ->paginate('30');
         return view('users.show',compact('user','statuses'));
     }
+
+
 
 
 
@@ -52,6 +59,9 @@ class UsersController extends Controller
     }
 
 
+
+
+
     /*
     编辑
     */
@@ -59,6 +69,10 @@ class UsersController extends Controller
         $this->authorize('update', $user);
         return view('users.edit',compact('user'));
     }
+
+
+
+
 
     /*
     更新
@@ -81,6 +95,10 @@ class UsersController extends Controller
         return redirect()->route('users.show', $user->id);
     }
 
+
+
+
+
     /*
     用户列表
     */
@@ -89,6 +107,10 @@ class UsersController extends Controller
         return view('users.index',compact('users'));
     }
 
+
+
+
+
     /*删除*/
     public function destroy(User $user){
         $this->authorize('destroy',$user);
@@ -96,6 +118,8 @@ class UsersController extends Controller
         session()->flash('success','成功删除用户！');
         return back();
     }
+
+
 
 
     protected function sendEmailConfirmationTo($user){
@@ -112,6 +136,7 @@ class UsersController extends Controller
     }
 
 
+
     public function confirmEmail($token)
     {
         //dd($user);
@@ -125,6 +150,25 @@ class UsersController extends Controller
         session()->flash('success', '恭喜你，激活成功！');
         return redirect()->route('users.show', [$user]);
     }
+
+
+
+
+
+    public function followings(User $user)
+    {
+        $users = $user->followings()->paginate(30);
+        $title = '关注的人';
+        return view('users.show_follow', compact('users', 'title'));
+    }
+
+    public function followers(User $user)
+    {
+        $users = $user->followers()->paginate(30);
+        $title = '粉丝';
+        return view('users.show_follow', compact('users', 'title'));
+    }
+
 
 
 
